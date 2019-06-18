@@ -1,18 +1,16 @@
 package iducs.springboot.board.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import iducs.springboot.board.domain.Answer;
 import iducs.springboot.board.domain.Question;
-import iducs.springboot.board.domain.User;
+import iducs.springboot.board.entity.AnswerEntity;
 import iducs.springboot.board.entity.QuestionEntity;
-import iducs.springboot.board.entity.UserEntity;
 import iducs.springboot.board.repository.QuestionRepository;
 
 @Service("questionService")
@@ -24,6 +22,13 @@ public class QuestionServiceImpl implements QuestionService {
 	public Question getQuestionById(long id) {
 		QuestionEntity entity = repository.findById(id).get();
 		Question question = entity.buildDomain();
+		// 질문 entity 객체로 부터 AnswerEntity ArrayList -> Answer ArrayList
+		
+		List<Answer> answerList = new ArrayList<Answer>();
+		for(AnswerEntity answerEntity : entity.getAnswers())
+			answerList.add(answerEntity.buildDomain());
+		question.setAnswers(answerList);
+		
 		return question;
 	}
 
@@ -78,7 +83,5 @@ public class QuestionServiceImpl implements QuestionService {
 		repository.delete(entity);
 		
 	}
-
-	
 
 }
