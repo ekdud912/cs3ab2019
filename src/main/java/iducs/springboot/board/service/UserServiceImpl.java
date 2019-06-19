@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUserId(String userId) {
-		UserEntity userEntity = userEntity = repository.findByUserId(userId);
+		UserEntity userEntity = repository.findByUserId(userId);
 		if(userEntity == null)
 			return null;
 		return userEntity.buildDomain();

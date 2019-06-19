@@ -64,18 +64,20 @@ public class HomeController {
 			return "redirect:/users/login-form";
 		}
 		session.setAttribute("user", sessionUser);
-		return "redirect:/";
+		return "redirect:/questions";
 	}	
 	
 	@GetMapping("/users/form") // 등록폼은 form URL을 가지도록 함, 다른 폼은 이름을 명명하기로 수정함
 	public String registerForm() {
 		return "/users/register";
 	}
+
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
+
 	/*
 	@GetMapping("/userinfo")
 	public String datail(HttpSession session) {

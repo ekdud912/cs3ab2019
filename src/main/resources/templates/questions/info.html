@@ -31,7 +31,7 @@
             <div class="col-lg-8 posts-list">
                <div class="single-post">
                   <div class="blog_details">
-                     <h2>제목 : <span th:text="${question.title}"></span></h2>
+                     <h2>제목 : <span th:text="${question.title}"></span></h2><h5><a class="nav-link" href="/qeustionDel">삭제</a></h5>
                      <ul class="blog-info-link mt-3 mb-4">
                      	<li><a href="#"><i class="far fa-user"></i> <span th:text="${question.writer.userId}"></span></a></li>
                         <li><a href="#"><i class="far fa-clock"></i> <span th:text="${#temporals.format(question.createTime, 'yyyy년 MM월 dd일 HH:mm')}"></span></a></li>
@@ -48,9 +48,9 @@
                   <div class="d-sm-flex justify-content-between text-center">
                      <p class="like-info"><span class="align-middle"><i class="far fa-heart"></i></span> Lily and 4
                         people like this</p>
-                      <li th:if="${same}" class="nav-item">
+                      <div th:if="${same}" class="nav-item">
                             <a class="nav-link" href="/questions"><p class="like-info"><span class="align-middle"><i class="far fa-heart"></i></span>글수정</p></a>
-                      </li>
+                      </div>
                         
                      <div class="col-sm-4 text-center my-2 my-sm-0">
                         <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
@@ -109,18 +109,12 @@
             <div class="col-lg-4">
                <div class="blog_right_sidebar">
                   <aside class="single_sidebar_widget search_widget">
-                     <form action="#">
-                        <div class="form-group">
-                           <div class="input-group mb-3">
-                              <input type="text" class="form-control" placeholder='Search Keyword'
-                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
-                              <div class="input-group-append">
-                                 <button class="btn" type="button"><i class="ti-search"></i></button>
-                              </div>
-                           </div>
-                        </div>
-                        <button class="button rounded-0 primary-bg text-white w-100 btn_4" type="submit">Search</button>
-                     </form>
+                     <!-- <form class="form-contact comment_form" th:action="@{'/questions/{id}'(id=${question.id})}" th:method="put" th:object="${question}" >
+                        <button class="button rounded-0 primary-bg text-white w-100 btn_4" type="submit">수정하기</button>
+                     </form> -->
+                     <div>
+                      <a class="nav-link" th:href="@{'/questions/{id}/infoEdit'(id=${question.id})}" >수정</a>
+                     </div>
                   </aside>
                   <aside class="single_sidebar_widget post_category_widget">
                      <h4 class="widget_title">Category</h4>

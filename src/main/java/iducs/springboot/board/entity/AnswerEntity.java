@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import iducs.springboot.board.domain.Answer;
 
 @Entity
-@Table (name="answer")
+@Table (name="comment")
 public class AnswerEntity {
 
 	@Id
@@ -22,11 +22,11 @@ public class AnswerEntity {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_answer_writer")
+	@JoinColumn(name="fk_comment_writer")
 	private UserEntity writer;
 	
 	@ManyToOne
-	@JoinColumn(name="fk_answer_question")
+	@JoinColumn(name="fk_comment_question")
 	private QuestionEntity question;
 
 	@Lob

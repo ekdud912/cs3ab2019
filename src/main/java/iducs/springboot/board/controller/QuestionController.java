@@ -3,6 +3,8 @@ package iducs.springboot.board.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,17 +56,22 @@ public class QuestionController {
 		model.addAttribute("question", question);
 		return "/questions/info";
 	}
-	@GetMapping("/{id}/form")
-	public String getUpdateForm(@PathVariable(value = "id") Long id, Model model) {
+	@GetMapping("/{id}/infoEdit")
+	public String getUpdateForm(@PathVariable(value = "id") Long id, Model model, HttpSession session) {
 		Question question = questionService.getQuestionById(id);
 		model.addAttribute("question", question);
-		return "/questions/info";
+		User writer = (User) session.getAttribute("user");
+		model.addAttribute("writer", writer);
+		return "/questions/infoEdit";
 	}
 	@PutMapping("/{id}")
-	public String updateQuestionById(@PathVariable(value = "id") Long id, String title, String contents, Model model) {
+	public String updateQuestionById(@PathVariable(value = "id") Long id, @Valid Question formQuestion, Model model) {
 		Question question = questionService.getQuestionById(id);
-		questionService.updateQuestion(question);		
-		return "redirect:/questions/" + id;
+		question.setTitle(formQuestion.getTitle());
+		question.setContents(formQuestion.getContents());
+		questionService.updateQuestion(question);
+		model.addAttribute("question", question);
+		return "redirect:/questions";
 	}
 	@DeleteMapping("/{id}")
 	public String deleteQuestionById(@PathVariable(value = "id") Long id, Model model) {
@@ -73,4 +80,18 @@ public class QuestionController {
 		model.addAttribute("userId", question.getWriter().getUserId());
 		return "/questions/withdrawal";
 	}
+
+	/*
+	@PutMapping("/{id}")
+	public String updateUserById(@PathVariable(value = "id") Long id, @Valid User formUser, Model model, HttpSession session) {
+		User user = userService.getUserById(id);
+		user.setUserPw(formUser.getUserPw());
+		user.setName(formUser.getName());
+		user.setCompany(formUser.getCompany());
+		userService.updateUser(user);		
+		model.addAttribute("user", user);
+		session.setAttribute("user", user);
+		return "/users/info";
+	}*/
+	
 }
